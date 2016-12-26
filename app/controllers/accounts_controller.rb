@@ -54,6 +54,14 @@ def new_deposit
    @account = Account.find(params[:id])
    @transactions = @account.transactions
    @transaction = @account.transactions
+   
+   pdf = TransactionList.new(@transactions)
+   respond_to do |format|
+     format.html
+     format.pdf do
+       send_data pdf.render , filename: 'transaction_list.pdf', type:'application/pdf', disposition: "inline"
+     end
+   end
  
       
  end
