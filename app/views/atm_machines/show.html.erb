@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @atm_machine.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @atm_machine.address %>
+</p>
+
+<p>
+  <strong>Street:</strong>
+  <%= @atm_machine.street %>
+</p>
+
+<p>
+  <strong>Ctiy:</strong>
+  <%= @atm_machine.ctiy %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @atm_machine.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @atm_machine.longitude %>
+</p>
+
+
+</h4><hr>
+<%if current_user.account.present? %>
+       <h3> Available  Balance  : 
+       <strong><%=number_to_currency(current_user.account.balance.to_f)%> </strong></h3>
+     <%else%>
+       <h3><strong class="label label-danger text-uppercase "> <%= p " CREATE NEW ACCOUNT!" %></strong></h3>
+     <%end%></center><br>
+     <center><% if current_user.user_info.present? %>
+    <%=link_to 'Withdrawal', new_withdrawal_account_path(current_user.account), class:"btn btn-info btn-lg" %> &nbsp; 
+   <%=link_to  'Add Deposit',  new_deposit_account_path(current_user.account), class:"btn btn-info btn-lg" %> &nbsp; 
+    <%= link_to' Update info',edit_user_info_path(current_user.user_info.id,atm_no: @atm_machine.id), class:"btn btn-info btn-lg" %> &nbsp;
+    <%=link_to ' transactions',  transaction_list_account_path(current_user.account ),class:"btn btn-info btn-lg"%></center>&nbsp;
+   <%else%> 
+       <center><%= link_to 'Add Account information',new_user_info_path(atm_no: @atm_machine.id ),class:" col-md-4 col-md-offset-2  btn btn-info btn-lg" %></center>
+   <%end%>
+
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@atm_machine.latitude}%2C#{@atm_machine.longitude}" %>
+
+<h3>Nearby locations</h3>
+<ul>
+<% for location in @atm_machine.nearbys(10) %>
+  <li><%= link_to atm_machine.address, atm_machine %> (<%= atm_machine.distance.round(2) %> miles)</li>
+<% end %>
+</ul>
+
+<%= link_to 'Edit', edit_atm_machine_path(@atm_machine) %> 
+<%= link_to 'Back', atm_machines_path %>

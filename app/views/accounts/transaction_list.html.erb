@@ -1,0 +1,30 @@
+<div class="row">
+ <div class="col-md-12 col-md-offset-0 ">
+   <br><h3>All transactions</h3><br>
+  <tr style="font-weight:bold">
+           <td>Atm number</td>
+           
+           <td> Amount</td>
+           <td> Time</td>
+         </tr>
+   <table  class="table table-bordered table-responsive text-center">
+     <% @transactions.each do |tran| %>
+           <tr>
+          <td>  <%=tran.atm_machine.name%></td>
+             
+             <td>
+               <%= number_to_currency(tran.amount) %>
+             </td>
+            
+             <td>
+               <% t=tran.created_at%>
+               <%= t.strftime("%I:%M:%S %p --- %m/%d/%Y")%>
+             </td>
+           </tr> 
+         <%end%>
+       </tbody>
+   </table>
+   <%=link_to 'Back', atm_machine_path(session[:atm_no]),class:"btn btn-danger btn-lg"%>
+   <br>
+ </div>
+</div>
