@@ -3,7 +3,7 @@ class AccountsController < ApplicationController
 
 def new_deposit
    @account = Account.find(params[:id])
- end
+end
  def create_deposit
    
    @account = Account.find(params[:id])
@@ -48,7 +48,7 @@ def new_deposit
    end
    
    def select_transaction 
- end
+   end
 
  def transaction_list
    @account = Account.find(params[:id])
